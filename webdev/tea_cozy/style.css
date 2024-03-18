@@ -39,7 +39,7 @@ main {
     width: 100%;
     display: flex;
     margin-top: 53px;
-    justify-content: center;
+    align-items: center;
     flex-direction: column;
 }
 
@@ -74,4 +74,43 @@ main {
 .wrap-image img {
     width: 300px;
     height: 200px;
+}
+
+#middle-section {
+    margin-top: 100px;
+    width: 1200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#middle-header {
+    width: 1000px;
+    padding: 15px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+#middle-header h2 {
+    font-size: 35px;
+    padding-bottom: 10px;
+}
+
+#middle-content {
+    width: 1000px;
+    display: flex;
+    justify-content: space-evenly;
+    flex-flow: row wrap;
+}
+
+.wrap-image {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.wrap-image h4 {
+    padding: 10px 0;
 }
