@@ -51,6 +51,18 @@ a[(a>5) | (a<2)] #returns all elements within range
 ```
 
 ## Statistics
+- sum
+```python
+survey_responses = ['Ceballos', 'Kerrigan', 'Ceballos', 'Ceballos', 'Ceballos','Kerrigan', 'Kerrigan', 'Ceballos', 'Ceballos', 'Ceballos', 
+'Kerrigan', 'Kerrigan', 'Ceballos', 'Ceballos', 'Kerrigan', 'Kerrigan', 'Ceballos', 'Ceballos', 'Kerrigan', 'Kerrigan', 'Kerrigan', 'Kerrigan', 'Kerrigan', 'Kerrigan', 'Ceballos', 'Ceballos', 'Ceballos', 'Ceballos', 'Ceballos', 'Ceballos',
+'Kerrigan', 'Kerrigan', 'Ceballos', 'Ceballos', 'Ceballos', 'Kerrigan', 'Kerrigan', 'Ceballos', 'Ceballos', 'Kerrigan', 'Kerrigan', 'Ceballos', 'Ceballos', 'Kerrigan', 'Kerrigan', 'Kerrigan', 'Kerrigan', 'Kerrigan', 'Kerrigan', 'Ceballos',
+'Kerrigan', 'Kerrigan', 'Ceballos', 'Ceballos', 'Ceballos', 'Kerrigan', 'Kerrigan', 'Ceballos', 'Ceballos', 'Kerrigan', 'Kerrigan', 'Ceballos', 'Ceballos', 'Kerrigan', 'Kerrigan', 'Kerrigan', 'Kerrigan', 'Kerrigan', 'Kerrigan', 'Ceballos']
+
+total_ceballos = sum([1 for n in survey_responses if n == "Ceballos"])
+print(total_ceballos)
+
+>>> 33
+```
 - mean
 ```python
 np.mean(array)
@@ -68,3 +80,59 @@ np.mean(2Darray, axis = 0) #mean of all columns
 - standard deviation 
     - the larger the deviation the more spread out our data are from the center
     - `np.std(array)`
+
+### Statistical distributions
+- Histograms
+    - individual columns are called bins
+    ```python
+    from matplotlib import pyplot as plt
+    data = np.array([1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 4, 4, 4, 4, 5])
+    plt.hist(data, bins=1, range=(2,6)) #inclusive and exculsive
+    plt.show()
+    ```
+    - classifing histograms based on the number of peaks
+    ![unimodal](../images/unimodal_new.svg)
+    ![bimodal](../images/bimodal_new.svg)
+    ![multimodal](../images/multimodal_new.svg)
+    ![uniform](../images/uniform_new.svg)
+    - calssifing unimodal histogram by data distribution
+    ![symmetric](../images/distribution-types-ii-symmetric-noline.svg)
+    ![symmetric](../images/distribution-types-ii-symmetric.svg)
+    ![skewright](../images/distribution-types-ii-skew-right-noline.svg)
+    ![skewright](../images/distribution-types-ii-skew-right.svg)
+    ![skewleft](../images/distribution-types-ii-skew-left-noline.svg)
+    ![skewleft](../images/distribution-types-ii-skew-left.svg)
+- Normal distribution
+    - `np.random.normal(loc, scale, size)`
+        - loc - mean for the normal distribution
+        - scale - standard deviation of the distribution
+        - size - number of random numbers to generate
+- Data distribution
+    - 68% of our samples will fall between +/- 1 standard deviation of the mean
+    - 95% of our samples will fall between +/- 2 standard deviations of the mean
+    - 99.7% of our samples will fall between +/- 3 standard deviations of the mean
+- Binomial distribution
+    - `np.random.binomial(N, P, size)`
+        - N - number of samples
+        - P - probability of success
+        - size - number of experiments
+        ```python
+        # Let's generate 10,000 "experiments"
+        # N = 10 shots
+        # P = 0.30 (30% he'll get a free throw)
+
+        a = np.random.binomial(10, 0.30, size=10000)
+
+        plt.hist(a, range=(0, 10), bins=10, normed=True)
+        plt.xlabel('Number of "Free Throws"')
+        plt.ylabel('Frequency')
+        plt.show()
+        ```
+
+        ```python
+        #calculating the percantage chance of a player scooring 4 shots out of 10
+        a = np.random.binomial(10, 0.30, size=10000)
+        np.mean(a == 4)
+
+        >>> 0.1973
+        ```
