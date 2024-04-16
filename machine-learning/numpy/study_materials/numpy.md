@@ -268,3 +268,6 @@ plt.pie(x = data.donut_vote_count, labels = data.donut_flavor, startangle = 30, 
     - `bins`: specifies how many bins to make (e.g. 10) OR where the edges of the bins are (as a list of values)
     - `range`: the lower and upper range of the bins. If unspecified, set to the min and max values for x
     - `color`: sets the color of the bars
+```python
+plt.hist(x = df.shoe_size, bins = 12, range = (5, 12), color = 'dodgerblue')
+```
