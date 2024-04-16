@@ -136,3 +136,135 @@ np.mean(2Darray, axis = 0) #mean of all columns
 
         >>> 0.1973
         ```
+
+## Matplotlib
+pandas - library designed for data analysis
+```python
+from matplotlib import pyplot as plt
+import pandas as pd
+%matplotlib inline
+
+data = pd.read_csv("PATH") #load CSV with pandas
+```
+**Charts**
+![charts](../images/charts.png)
+- Line chart - shows continuous change, often used to measure change over time
+- Scatter plot - uses position to show the relationship, or correlation, between two numeric values
+- Bar chart - uses bar height to compare a measure between categorical variables
+- Pie chart - shows us the breakdown of a whole into its parts
+- Histogram - shows how one kind of data is distributed
+
+**General functions**
+![general_functions](../images/general_functions.png)
+### Line chart
+```python
+plt.plot(x, y) #we can use direct data, arrays or dataframes
+
+line_data = pd.read_csv('2020-monthly-avg-temps-f.csv')
+line_data.head() #shows the firts 5 rows
+plt.plot(line_data.month_name, line_data.windhoek_avg_high, color="#FF0000")
+plt.plot(line_data.month_name, line_data.kodiak_avg_high, color="blue")
+plt.show()
+```
+- `linewidth` - changes the thickness of the line
+- `linestyle` - dotted, dashed, solid
+
+```python
+plt.title("Adding title and legend")
+plt.plot(x, y, color='red', label='Line Y')
+plt.plot(x, z, color='green', label='Line Z')
+plt.legend(bbox_to_anchor=(1,0.5)) #positions the legend
+# x-axis 0 is left and 1 is right
+# y-axis 0 is bottom and 1 is top
+plt.xlabel("axis x")
+plt.ylabel("axis y")
+plt.tick_params(axis='x', direction='out', color='red' labelsize='large', labelcolor='purple', labelrotation=30)
+# adjusts the ticks of each axis(overlaping)
+plt.show()
+```
+**Export a chart**
+```python
+plt.savefig("chart_name.png", dpi=128, bbox_inches="tight")
+```
+### Bar chart
+- `plt.bar()`
+    - x : categorical data for each bar
+    - height : numeric data to determin height of eachbar
+    - width : a number to set the width of each bar
+    - align : set to `center` or `edge` to align each bar on the x-axis
+```python
+plt.bar(x = data.business_name, height = data.profit, width = 0.8, align = 'center')
+plt.title("Profits at 5 Businesses, 2021")
+plt.xlabel("Business Name")
+plt.ylabel("Profit ($)")
+plt.show()
+```
+**Error bars**
+- `plt.errorbar(x, y, yerr, color, fmt)`
+    - `x` and `y` restate the x and y values of the underlying graph
+    - `yerr` and/or `xerr` set error values in the x or y direction
+    - `color`
+    - `fmt` change the marker
+```python
+plt.bar(x = bar_data.PH, height = bar_data.average_leaf_width, width = 0.8, align = 'center')
+plt.title('Effect of pH on Leaf Width')
+plt.xlabel('pH')
+plt.ylabel('Leaf Width (cm)')
+plt.errorbar(x=bar_data.PH, y=bar_data.average_leaf_width, yerr=bar_data.error, fmt="o", color="orangered")
+plt.show()
+```
+
+### Scatterplot
+positive correlation - if x increases and y also increases
+negative correlation - if x increases and y decreases
+no corelation - if x increases and y remains constant
+- `plt.scatter(x, y, color, alpha)`
+    - `x` and `y` are continuous numeric variables we are comparing
+    - `color`
+    - `alpha`
+```python
+plt.scatter(scatter_data.danceability, scatter_data.valence, alpha = 0.15, color = "teal")
+plt.title('Mood and Danceability correlation in Spotify genres')
+plt.xlabel('Danceability')
+plt.ylabel('Valence / Mood (sadder to happier)')
+plt.show()
+```
+**View in subplots**
+- `plt.subplot(num_rows, num_columns, index)`
+    - `num_rows`: number of rows in the grid
+    - `num_columns`: number of columns in the grid
+    - `index`: the numbered position of the subplot, reading the grid from left-to-right, top-to-bottom
+- `plt.suptitle()` adds a single title to the top
+- `plt.title()` adds a title to every plot
+```python
+plt.suptitle('Rainbow Scatterplots')
+plt.subplot(2, 3, 1)
+plt.scatter(x, y, color = red)
+plt.subplot(2, 3, 2)
+plt.scatter(x, y, color = orange)
+plt.subplot(2, 3, 3)
+plt.scatter(x, y, color = yellow)
+plt.subplot(2, 3, 4)
+plt.scatter(x, y, color = green)
+plt.subplot(2, 3, 5)
+plt.scatter(x, y, color = blue)
+plt.subplot(2, 3, 6)
+plt.scatter(x, y, color = purple)
+```
+
+### Pie chart
+- `plt.pie(x, labels, startangle, colors)`
+    - `x`: the numeric variable shown as pieces of the pie. The function adds up all the x values to compare part and whole and auto-generate the pieces of the pie.
+    - `labels`: the variable used to label each section of the pie chart
+    - `startangle`: the rotation of the pie chart, adjusted to improve readability
+    - `colors`: an array of colors the chart will cycle through. If blank, defaults to matplotlib’s default 10-color “Tableau” palette.
+```python
+plt.pie(x = data.donut_vote_count, labels = data.donut_flavor, startangle = 30, colors = ['brown', 'pink', 'purple', 'white', 'red'])
+```
+
+### Histogram
+- `plt.hist(x, bins, range, color)`
+    - `x`: the value being distributed (like shoe size, or height) – note that it should not be an aggregated value
+    - `bins`: specifies how many bins to make (e.g. 10) OR where the edges of the bins are (as a list of values)
+    - `range`: the lower and upper range of the bins. If unspecified, set to the min and max values for x
+    - `color`: sets the color of the bars

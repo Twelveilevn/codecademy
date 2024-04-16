@@ -1,4 +1,47 @@
 # *SYNTAX AND SELECTORS*
+```HTML
+<head>
+    <link href="style.css" rel="stylesheet">
+</head>
+```
+### Selectors
+```CSS
+p {
+    color: blue; /*property and value*/
+}
+
+* { /*universal selector*/
+    ...;
+}
+
+.classname { /*class selector*/
+    ...;
+}
+
+#idname { /*id selector*/
+    ...;
+}
+
+[href] { /*attribute selector*/
+    ...;
+}
+
+img[src="winter"] {
+    ...;
+}
+```
+
+```CSS
+<h1 class="green bold">...</h1>
+/*multiple classes*/
+/*classes are meant to be used over many elements*/
+.green {
+    ...;
+}
+.bold {
+    ...;
+}
+```
 # *VISUAL RULES*
 # *BOX MODEL*
 # *DISPLAY AND POSITIONING*
