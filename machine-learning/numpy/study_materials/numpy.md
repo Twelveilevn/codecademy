@@ -199,7 +199,14 @@ plt.xlabel("Business Name")
 plt.ylabel("Profit ($)")
 plt.show()
 ```
-**Error bars**
+**Show two bar charts in one figure**
+```python
+plt.bar(x=avg_heights.family, height=avg_heights.trunk)
+plt.bar(x=avg_heights.family, height=avg_heights.leaves, bottom=avg_heights.trunk)
+plt.show()
+```
+
+### Error bars
 - `plt.errorbar(x, y, yerr, color, fmt)`
     - `x` and `y` restate the x and y values of the underlying graph
     - `yerr` and/or `xerr` set error values in the x or y direction
@@ -229,7 +236,7 @@ plt.xlabel('Danceability')
 plt.ylabel('Valence / Mood (sadder to happier)')
 plt.show()
 ```
-**View in subplots**
+### View in subplots
 - `plt.subplot(num_rows, num_columns, index)`
     - `num_rows`: number of rows in the grid
     - `num_columns`: number of columns in the grid
@@ -251,7 +258,88 @@ plt.scatter(x, y, color = blue)
 plt.subplot(2, 3, 6)
 plt.scatter(x, y, color = purple)
 ```
+```python
+fig = plt.figure(figsize=(18,16), facecolor='lightgray', tight_layout=True) 
+fig.subplots_adjust(hspace=.6)
+fig.suptitle('Species Counts in Primary, Secondary, and Selectively Logged Tapajos Forests', fontsize=20, y=1)
+plt.subplot(3,1,1)
+plt.bar(PF_data.genus, PF_data.counts, color=PF_data.color_label)
+plt.xlabel('Primary Forest')
+plt.ylim((0,105))
+plt.xlim((-3,105))
+plt.xticks(rotation=-90, fontsize=13)
+plt.subplot(3,1,2)
+plt.bar(SF_data.genus, SF_data.counts, color=SF_data.color_label)
+plt.xlabel('Secondary Forest')
+plt.ylim((0,105))
+plt.xlim((-3,105))
+plt.xticks(rotation=-90, fontsize=13)
+plt.subplot(3,1,3)
+plt.bar(SLF_data.genus, SLF_data.counts, color=SLF_data.color_label)
+plt.xlabel('Selectively Logged Forest')
+plt.ylim((0,105))
+plt.xlim((-3,105))
+plt.xticks(rotation=-90, fontsize=13)
+plt.show()
+```
+- `plt.xlim()`: specifies the range on the x-axis
+- `plt.ylim()`: specifies the range in the y-axis
+- `plt.xticks(ha, rotation)`: adjusts the x-axis labels
+    - `ha`: horizontal alignment (left,right,center)
+    - `rotation`: number
 
+- `fig = plt.figure(figsize, tight_layout, facecolor)`
+    - `figsize`: adjusts the dimensions of the figure
+    - `tight_layout`: adjusts the spacing of plots for an automated “best fit” with a Boolean
+    - `facecolor`: sets the background color
+    ```python
+    fig = plt.figure(figsize = (10, 4), tight_layout = True, facecolor=’lightgray’)
+    ```
+- `fig`: this instance has its own methods
+    - `suptitle()`: adds a centered title at the top of all subplots, with font size and spacing parameters
+    - `supxlabel()`: adds an xlabel to all plots
+    - `supylabel()`: adds a ylabel to all plots
+    - `subplots_adjust(hspace, wspace)`: manually adjusts spacing around plots
+    ```python
+    fig.suptitle(‘Six line graphs’, fontsize=24, x=0.45, y=0.95)
+    fig.supxlabel(‘Time’)
+    fig.subplots_adjust(hspace = 0.5, wspace = 0.25)
+    ```
+```python
+fig = plt.figure(figsize=(18,16), facecolor='lightgray', tight_layout=True) 
+fig.subplots_adjust(hspace=.6)
+fig.suptitle('Species Counts in Primary, Secondary, and Selectively Logged Tapajos Forests', fontsize=22, y=1)
+plt.subplot(3,1,1)
+plt.bar(PF_data.genus, PF_data.counts, color=PF_data.color_label)
+plt.annotate("Primary Forest", (95,80), fontsize=18, ha="right", backgroundcolor="lightgray")
+plt.ylim((0,105))
+plt.xlim((-3,105))
+plt.xticks(rotation=-90, fontsize=12)
+plt.subplot(3,1,2)
+plt.bar(SF_data.genus, SF_data.counts, color=SF_data.color_label)
+plt.annotate("Secondary Forest", (95,80), fontsize=18, ha="right", backgroundcolor="lightgray")
+plt.ylim((0,105))
+plt.xlim((-3,105))
+plt.xticks(rotation=-90, fontsize=12)
+plt.subplot(3,1,3)
+plt.bar(SLF_data.genus, SLF_data.counts, color=SLF_data.color_label)
+plt.annotate("Selectively Logged Forest", (95,80), fontsize=18, ha="right", backgroundcolor="lightgray")
+plt.ylim((0,105))
+plt.xlim((-3,105))
+plt.xticks(rotation=-90, fontsize=12)
+plt.show()
+```
+- `plt.annotate(text, (xy))`
+    - `text`
+    - `(xy)`
+    - `fontsize` and `color`
+    - `ha` and `va` to set horizontal and vertical alignment
+    - `backgroundcolor`
+    - `arrowprops` to style an arrow from the annotation to a point
+    - `xytext` to reposition the text, if an arrow is used – the arrowhead will automatically be positioned at (xy)
+    ```python
+    plt.annotate('Look at this point!', xy=(15, 35), xytext=(17, 40), fontsize=14, color='blue', arrowprops=dict(arrowstyle= '-|-|>', color='blue'))
+    ```
 ### Pie chart
 - `plt.pie(x, labels, startangle, colors)`
     - `x`: the numeric variable shown as pieces of the pie. The function adds up all the x values to compare part and whole and auto-generate the pieces of the pie.
@@ -270,4 +358,36 @@ plt.pie(x = data.donut_vote_count, labels = data.donut_flavor, startangle = 30, 
     - `color`: sets the color of the bars
 ```python
 plt.hist(x = df.shoe_size, bins = 12, range = (5, 12), color = 'dodgerblue')
+```
+
+### AB lines
+- it's a straight line added to a graph from point A to point B
+- `plt.axhline(y, xmin, xmax, linewidth, dashes, color)`: makes a horizontal AB line
+- `plt.axvline(x, ymin, ymax, linewidth, dashes, color)`: makes a vertical AB line
+    - `x`: where to position the line along the x-axis
+    - `ymin`: how close to the bottom of the graph the line starts. Setting ymin=0 starts the line at the bottom of the graph, ymin=.5 would start it halfway up, and ymin=1 would start at the top of the graph. Usually set to 0
+    - `ymax`: how close to the bottom of the graph the line ends. Setting ymax=0 ends the line at the bottom of the graph, ymax=.5 would end it halfway up, and ymax=1 would end at the top of the graph. Usually set to 1
+    - `linewidth`: line width of the AB line
+    - `dashes`: dash pattern given as (line_length, space_length)
+    - `color`: color of the AB line
+```python
+plt.bar( x = school_subject, y = test_score)
+plt.axhline(y = 85, xmin = 0, xmax = 1, linewidth = 2, color = red)
+```
+- `plt.annotate(text, xy, color)`: allows us to position and format text on a graph
+    - `text`: annotation text
+    - `xy`: (x, y) coordinate position for annotation
+    - `color`: color of annotation text and arrow
+```python
+plt.hist(hist_data.carapace_length, bins=30, range=(75,155), color='gold')
+plt.title('Lobsters tagged by size')
+plt.ylabel('Number tagged')
+plt.xlabel('Carapace length (mm)')
+
+plt.axvline(x=83, ymin=0, ymax=1, linewidth=2, dashes=(1,2), color='mediumblue')
+plt.axvline(x=127, ymin=0, ymax=1, linewidth=2, dashes=(1,2), color='mediumblue')
+plt.annotate('Minimum legal catch size', (84, 23), color='mediumblue')
+plt.annotate('Maximum legal \n catch size', (128, 7), color='mediumblue')
+
+plt.show()
 ```
