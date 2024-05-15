@@ -109,3 +109,6 @@ if __name__ == "__main__":
     ll.insert_at(6, 65)
     ll.print_list()
     print("length:",ll.get_length())
+    
+# add method to remove node by value
+# add method to swap two nodes
